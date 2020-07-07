@@ -1,10 +1,10 @@
 /*
  * Title:        CloudSim Toolkit
  * Description:  CloudSim (Cloud Simulation) Toolkit for Modeling and Simulation
- *               of Clouds
- * Licence:      GPL - http://www.gnu.org/copyleft/gpl.html
+ *               of Clouds used for implementation of load balancing algorithm for Research Practice
+ * ToolKit Licence:      GPL - http://www.gnu.org/copyleft/gpl.html
  *
- * Copyright (c) 2009, The University of Melbourne, Australia
+ * ToolKit Licence: Copyright (c) 2009, The University of Melbourne, Australia 
  */
 
 
@@ -39,10 +39,7 @@ import org.cloudbus.cloudsim.provisioners.BwProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.PeProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.RamProvisionerSimple;
 
-/**
- * An example showing how to create
- * scalable simulations.
- */
+
 public class CloudSimNewLoadAssign {
 
 	/** The cloudlet list. */
@@ -75,8 +72,6 @@ public class CloudSimNewLoadAssign {
 			int pesNumber = sc.nextInt();
 			
 			vm[i] = new Vm(i, userId, mips, pesNumber, ram, bw, sizeVM, vmm, new CloudletSchedulerTimeShared());
-			//for creating a VM with a space shared scheduling policy for cloudlets:
-			//vm[i] = Vm(i, userId, mips, pesNumber, ram, bw, size, priority, vmm, new CloudletSchedulerSpaceShared());
 
 			list.add(vm[i]);
 		}
@@ -163,7 +158,7 @@ public class CloudSimNewLoadAssign {
 				}
 			}
 			if(c <= 2) {
-				System.out.println("\nQuery is least loaded!");
+				System.out.println("\nQuery is lightly loaded!");
 				rst =  1;
 			}
 			else {
@@ -171,10 +166,9 @@ public class CloudSimNewLoadAssign {
 				rst = 2;
 			}
 			
-			//aux -e
 			System.out.println("Enter request subquery size :");
 			int ntasks = sc.nextInt();
-			cloudletList = createCloudlet(brokerId,ntasks, rst); // creating 40 cloudlets
+			cloudletList = createCloudlet(brokerId,ntasks, rst); // creating cloudlets
 
 			broker.submitVmList(vmlist);
 			broker.submitCloudletList(cloudletList);
@@ -199,7 +193,7 @@ public class CloudSimNewLoadAssign {
 		}
 	}
 	
-	//for getting the index of min value in arr - auxx
+	//for getting the index of min value in arr 
 	public static int getMin(long[] arr, int n){
 	    int res = 0;
 	    long min = Long.MAX_VALUE;
@@ -212,7 +206,7 @@ public class CloudSimNewLoadAssign {
 	    return res;
 	}
 
-	//for getting the index of max value in arr - auxx
+	//for getting the index of max value in arr
 	public static int getMax(long[] arr, int n){
 	    int res = 0;
 	    long max = Long.MIN_VALUE;
@@ -237,7 +231,7 @@ public class CloudSimNewLoadAssign {
 		}
 	}
 
-	//created by abhijeet - aux
+	//load balancing algorithm
 	private static List<Vm> loadBalancing(List<Vm> vmlist) {
 		// TODO Auto-generated method stub
 		int n = vmlist.size();
@@ -249,7 +243,6 @@ public class CloudSimNewLoadAssign {
 		System.out.println("++++++++++++++++++++++++++++++++++++++++ LOAD BALANCING ++++++++++++++++++++++++++++++++++++++++\n\nServer status before load load balance.");
 		printServerStatus(arr);
 		
-		//aux -s
 		
 		long total = 0;
 		for(long i : arr) {
@@ -293,8 +286,6 @@ public class CloudSimNewLoadAssign {
 			v.setSize(arr[i1++]);
 		}
 	
-		
-		//aux-e
 		return vmlist;
 	}
 
@@ -357,35 +348,6 @@ public class CloudSimNewLoadAssign {
     		); // Second machine
 
 
-		//To create a host with a space-shared allocation policy for PEs to VMs:
-		//hostList.add(
-    	//		new Host(
-    	//			hostId,
-    	//			new CpuProvisionerSimple(peList1),
-    	//			new RamProvisionerSimple(ram),
-    	//			new BwProvisionerSimple(bw),
-    	//			storage,
-    	//			new VmSchedulerSpaceShared(peList1)
-    	//		)
-    	//	);
-
-		//To create a host with a oportunistic space-shared allocation policy for PEs to VMs:
-		//hostList.add(
-    	//		new Host(
-    	//			hostId,
-    	//			new CpuProvisionerSimple(peList1),
-    	//			new RamProvisionerSimple(ram),
-    	//			new BwProvisionerSimple(bw),
-    	//			storage,
-    	//			new VmSchedulerOportunisticSpaceShared(peList1)
-    	//		)
-    	//	);
-
-
-		// 5. Create a DatacenterCharacteristics object that stores the
-		//    properties of a data center: architecture, OS, list of
-		//    Machines, allocation policy: time- or space-shared, time zone
-		//    and its price (G$/Pe time unit).
 		String arch = "x86";      // system architecture
 		String os = "Linux";          // operating system
 		String vmm = "Xen";
